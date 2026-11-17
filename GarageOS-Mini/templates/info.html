@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block contenuto %}
+<section class="pagina">
+    <p class="etichetta">Informazioni</p>
+    <h1>Il progetto</h1>
+    <p>GarageOS Mini è un sito fatto con Python e Flask.</p>
+    <p>Serve per salvare le auto e tenere traccia delle spese.</p>
+    <p>Per ora ci sono la home e questa pagina.</p>
+    <a class="pulsante" href="{{ url_for('home') }}">Torna alla home</a>
+</section>
+{% endblock %}

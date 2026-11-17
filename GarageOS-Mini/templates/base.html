@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GarageOS Mini</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="barra">
+        <a class="logo" href="{{ url_for('home') }}">🚗 GarageOS Mini</a>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('info') }}">Info</a>
+        </nav>
+    </header>
+
+    <main class="contenitore">
+        {% block contenuto %}{% endblock %}
+    </main>
+
+    <footer>GarageOS Mini - progetto Flask</footer>
+</body>
+</html>

@@ -1,0 +1,21 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; color: #1f2937; background: #f5f7fa; }
+a { text-decoration: none; }
+.barra { padding: 18px 7%; background: #14263d; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.logo { color: white; font-size: 20px; font-weight: bold; }
+nav { display: flex; gap: 20px; }
+nav a { color: #e1e8f0; }
+nav a:hover { color: white; }
+.contenitore { width: min(1050px, 90%); margin: 55px auto; min-height: 65vh; }
+.intro, .pagina { background: white; border-radius: 14px; padding: 45px; }
+.etichetta { color: #2162a5; font-size: 14px; font-weight: bold; text-transform: uppercase; }
+h1 { font-size: 36px; margin: 10px 0 16px; }
+p { line-height: 1.6; }
+.pulsante { display: inline-block; margin-top: 15px; background: #2162a5; padding: 12px 20px; border-radius: 8px; color: white; }
+.pulsante:hover { background: #194d83; }
+.griglia { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
+.scheda { background: white; padding: 25px; border-radius: 14px; }
+.scheda h2 { margin-bottom: 8px; }
+.emoji { font-size: 28px; }
+footer { text-align: center; padding: 28px; color: #667085; }
+@media (max-width: 700px) { .barra { flex-direction: column; } .griglia { grid-template-columns: 1fr; } .intro, .pagina { padding: 26px; } h1 { font-size: 28px; } }
