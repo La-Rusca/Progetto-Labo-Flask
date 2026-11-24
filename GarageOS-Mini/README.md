@@ -1,52 +1,88 @@
 # GarageOS Mini
 
-Sito fatto con Flask per salvare auto e spese. Ogni utente ha il proprio account e vede solo i propri dati.
+GarageOS Mini è un'applicazione web fatta con Python e Flask per gestire le auto e le relative spese.
 
-## Avvio (Windows PowerShell)
+## Funzionalità
+
+- registrazione, login e logout
+- aggiunta ed eliminazione dei veicoli
+- registrazione ed eliminazione delle spese
+- riepilogo delle spese nella home
+- ogni utente vede solo i propri dati
+
+## Installazione (Windows)
+
+Aprire un terminale nella cartella `GarageOS-Mini`.
+
+Creare l'ambiente virtuale e installare le librerie:
 
 ```powershell
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Copiare `.env.example` in `.env`:
+
+```powershell
 Copy-Item .env.example .env
 ```
 
-Nel file `.env` cambia `SECRET_KEY` con una chiave casuale. Per crearla:
+Generare una chiave segreta:
 
 ```powershell
 .\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-Se `migrations/` esiste già, aggiorna il database:
+Inserire la chiave generata come valore di `SECRET_KEY` nel file `.env`.
+
+## Database
+
+Per creare le tabelle usando le migrazioni già presenti:
 
 ```powershell
-.\.venv\Scripts\python.exe -m flask --app app db migrate -m "aggiunta utenti"
 .\.venv\Scripts\python.exe -m flask --app app db upgrade
 ```
 
-Se non hai ancora la cartella `migrations/`, prima esegui:
+Le migrazioni sono nella cartella `migrations/`.
 
-```powershell
-.\.venv\Scripts\python.exe -m flask --app app db init
-```
-
-Poi esegui `db migrate` e `db upgrade` come sopra.
-
-Per avviare il sito:
+## Avvio
 
 ```powershell
 .\.venv\Scripts\python.exe app.py
 ```
 
-Apri http://127.0.0.1:5000. Da lì puoi registrarti, accedere e aggiungere veicoli e spese.
-
-## Nota sui dati vecchi
-
-Se avevi già delle auto prima del login, quelle righe restano nel database ma non sono collegate a un utente e quindi non si vedono nei nuovi account. Puoi aggiungerle di nuovo. Non cancellare il database senza aver salvato i dati che ti servono.
+Aprire `http://127.0.0.1:5000` nel browser.
 
 ## Test
 
+### Pytest
+
 ```powershell
-.\.venv\Scripts\python.exe -m pytest -v
+.\.venv\Scripts\python.exe -m pytest tests/test_app.py -v
 ```
 
-Il file `.env` e il database locale non vanno caricati su GitHub; la cartella `migrations/` invece sì.
+### Playwright
+
+Installare Chromium (solo la prima volta):
+
+```powershell
+.\.venv\Scripts\python.exe -m playwright install chromium
+```
+
+Per non usare i dati normali dell'app, i test Playwright si eseguono con un database separato. Prima fermare gli eventuali server Flask già avviati.
+
+Nel **primo terminale PowerShell**:
+
+```powershell
+$env:DATABASE_URL = "sqlite:///garageos_playwright.db"
+.\.venv\Scripts\python.exe -c "from app import app; from models import db; ctx = app.app_context(); ctx.push(); db.create_all(); ctx.pop()"
+.\.venv\Scripts\python.exe app.py
+```
+
+Lasciare aperto il primo terminale. Nel **secondo terminale**:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/test_browser.py -v
+```
+
+Questi test simulano alcune operazioni nel browser, come registrarsi, accedere e aggiungere dati.

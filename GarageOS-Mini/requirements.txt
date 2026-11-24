@@ -5,3 +5,4 @@ Flask-Migrate>=4.0,<5
 Flask-Login>=0.6.3,<1
 Flask-WTF>=1.2,<2
 pytest>=8,<10
+playwright>=1.50,<2
