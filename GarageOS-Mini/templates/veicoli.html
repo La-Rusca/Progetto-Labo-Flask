@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block contenuto %}
+<section class="pagina">
+    <h1>Veicoli</h1>
+    <form method="post" class="modulo">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Marca <input name="marca" maxlength="50" required placeholder="es. Volkswagen"></label>
+        <label>Modello <input name="modello" maxlength="50" required placeholder="es. Golf"></label>
+        <label>Anno <input name="anno" type="number" min="1900" max="2100" required placeholder="es. 2020"></label>
+        <button class="pulsante" type="submit">Aggiungi veicolo</button>
+    </form>
+</section>
+<section class="pagina lista">
+    <h2>Le mie auto</h2>
+    {% for veicolo in veicoli %}
+        <div class="riga">
+            <div><strong>{{ veicolo.marca }} {{ veicolo.modello }}</strong><br><small>{{ veicolo.anno }}</small></div>
+            <div class="azioni">
+                <form method="post" action="{{ url_for('elimina_veicolo', id=veicolo.id) }}" onsubmit="return confirm('eliminare questo veicolo e le sue spese?')">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="pericolo" type="submit">Elimina</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p>Non ci sono ancora veicoli.</p>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block contenuto %}
+<section class="pagina">
+    <h1>Spese</h1>
+    {% if veicoli %}
+    <form method="post" class="modulo">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Veicolo
+            <select name="veicolo_id" required>
+                {% for veicolo in veicoli %}
+                    <option value="{{ veicolo.id }}">{{ veicolo.marca }} {{ veicolo.modello }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Descrizione <input name="descrizione" maxlength="100" required placeholder="es. benzina"></label>
+        <label>Importo (CHF) <input name="importo" type="number" min="0.01" step="0.01" required placeholder="es. 65.50"></label>
+        <button class="pulsante" type="submit">Aggiungi spesa</button>
+    </form>
+    {% else %}
+        <p>Prima devi <a href="{{ url_for('veicoli') }}">aggiungere un veicolo</a>.</p>
+    {% endif %}
+</section>
+<section class="pagina lista">
+    <h2>Spese registrate</h2>
+    {% for spesa in spese %}
+        <div class="riga">
+            <div><strong>{{ spesa.descrizione }}</strong><br>
+            <small>{{ spesa.veicolo.marca }} {{ spesa.veicolo.modello }} · CHF {{ '%.2f'|format(spesa.importo) }}</small></div>
+            <form method="post" action="{{ url_for('elimina_spesa', id=spesa.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="pericolo" type="submit">Elimina</button>
+            </form>
+        </div>
+    {% else %}
+        <p>Non ci sono ancora spese.</p>
+    {% endfor %}
+</section>
+{% endblock %}

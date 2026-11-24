@@ -1,28 +1,26 @@
 {% extends "base.html" %}
-
 {% block contenuto %}
 <section class="intro">
     <p class="etichetta">GarageOS Mini</p>
     <h1>Gestione garage</h1>
-    <p>Un sito per gestire le auto e segnare le spese.</p>
-    <a class="pulsante" href="{{ url_for('info') }}">Informazioni</a>
+    <p>Un sito per salvare le auto e segnare le spese.</p>
+    <a class="pulsante" href="{{ url_for('veicoli') }}">Vai ai veicoli</a>
 </section>
-
 <section class="griglia">
     <article class="scheda">
         <span class="emoji">🚘</span>
         <h2>Veicoli</h2>
-        <p>Elenco delle auto e dei loro dati.</p>
+        <p class="numero">{{ veicoli }}</p>
     </article>
     <article class="scheda">
         <span class="emoji">💰</span>
-        <h2>Spese</h2>
-        <p>Spese per benzina, manutenzione e assicurazione.</p>
+        <h2>Spese registrate</h2>
+        <p class="numero">{{ numero_spese }}</p>
     </article>
     <article class="scheda">
         <span class="emoji">📊</span>
-        <h2>Riepilogo</h2>
-        <p>Totale delle spese delle auto.</p>
+        <h2>Totale spese</h2>
+        <p class="numero">CHF {{ '%.2f'|format(totale) }}</p>
     </article>
 </section>
 {% endblock %}

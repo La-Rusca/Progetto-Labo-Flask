@@ -10,15 +10,27 @@
     <header class="barra">
         <a class="logo" href="{{ url_for('home') }}">🚗 GarageOS Mini</a>
         <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('info') }}">Info</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('veicoli') }}">Veicoli</a>
+                <a href="{{ url_for('spese') }}">Spese</a>
+                <span class="utente">{{ current_user.username }}</span>
+                <form method="post" action="{{ url_for('auth.logout') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="link-nav" type="submit">Esci</button>
+                </form>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Login</a>
+                <a href="{{ url_for('auth.registrazione') }}">Registrati</a>
+            {% endif %}
         </nav>
     </header>
-
     <main class="contenitore">
+        {% for messaggio in get_flashed_messages() %}
+            <p class="avviso">{{ messaggio }}</p>
+        {% endfor %}
         {% block contenuto %}{% endblock %}
     </main>
-
     <footer>GarageOS Mini - progetto Flask</footer>
 </body>
 </html>

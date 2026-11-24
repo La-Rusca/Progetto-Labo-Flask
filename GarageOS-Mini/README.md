@@ -1,18 +1,8 @@
 # GarageOS Mini
 
-Un piccolo sito fatto con Python e Flask per gestire auto e spese.
+Sito fatto con Flask per salvare auto e spese. Ogni utente ha il proprio account e vede solo i propri dati.
 
-## Cosa c'è adesso
-
-- home
-- pagina info
-- stile css
-
-## Come avviarlo (Windows)
-
-Serve Python 3.11 o più recente.
-
-Aprire il terminale nella cartella del progetto e scrivere:
+## Avvio (Windows PowerShell)
 
 ```powershell
 py -m venv .venv
@@ -20,28 +10,43 @@ py -m venv .venv
 Copy-Item .env.example .env
 ```
 
-Nel file `.env` bisogna sostituire `SECRET_KEY` con una chiave casuale. Si può creare così:
+Nel file `.env` cambia `SECRET_KEY` con una chiave casuale. Per crearla:
 
 ```powershell
 .\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-Per avviare:
+Se `migrations/` esiste già, aggiorna il database:
+
+```powershell
+.\.venv\Scripts\python.exe -m flask --app app db migrate -m "aggiunta utenti"
+.\.venv\Scripts\python.exe -m flask --app app db upgrade
+```
+
+Se non hai ancora la cartella `migrations/`, prima esegui:
+
+```powershell
+.\.venv\Scripts\python.exe -m flask --app app db init
+```
+
+Poi esegui `db migrate` e `db upgrade` come sopra.
+
+Per avviare il sito:
 
 ```powershell
 .\.venv\Scripts\python.exe app.py
 ```
 
-Aprire `http://127.0.0.1:5000` nel browser.
+Apri http://127.0.0.1:5000. Da lì puoi registrarti, accedere e aggiungere veicoli e spese.
 
-## File
+## Nota sui dati vecchi
 
-- `app.py`: le pagine gestite da Flask
-- `templates/`: file html
-- `static/`: file css
-- `requirements.txt`: librerie da installare
-- `.env.example`: esempio delle impostazioni
+Se avevi già delle auto prima del login, quelle righe restano nel database ma non sono collegate a un utente e quindi non si vedono nei nuovi account. Puoi aggiungerle di nuovo. Non cancellare il database senza aver salvato i dati che ti servono.
 
-## Da aggiungere
+## Test
 
-Database, gestione delle auto, spese e utenti.
+```powershell
+.\.venv\Scripts\python.exe -m pytest -v
+```
+
+Il file `.env` e il database locale non vanno caricati su GitHub; la cartella `migrations/` invece sì.

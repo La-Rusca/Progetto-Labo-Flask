@@ -19,3 +19,22 @@ p { line-height: 1.6; }
 .emoji { font-size: 28px; }
 footer { text-align: center; padding: 28px; color: #667085; }
 @media (max-width: 700px) { .barra { flex-direction: column; } .griglia { grid-template-columns: 1fr; } .intro, .pagina { padding: 26px; } h1 { font-size: 28px; } }
+
+/* moduli e liste */
+.modulo { display: grid; gap: 14px; max-width: 440px; margin-top: 20px; }
+.modulo label { display: grid; gap: 6px; font-weight: bold; }
+.modulo input, .modulo select { width: 100%; padding: 11px; border: 1px solid #cbd5e1; border-radius: 7px; font: inherit; }
+.modulo .pulsante { border: 0; cursor: pointer; font: inherit; justify-self: start; }
+.lista { margin-top: 20px; }
+.riga { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 16px 0; border-bottom: 1px solid #e5e7eb; }
+.azioni { display: flex; align-items: center; gap: 15px; }
+.pericolo { background: transparent; border: 0; color: #b42318; cursor: pointer; font: inherit; }
+.numero { font-size: 26px; font-weight: bold; margin: 0; }
+.avviso { padding: 12px; border-radius: 8px; background: #fff3db; }
+small { color: #667085; }
+@media (max-width: 700px) { .riga { align-items: start; } }
+
+nav { align-items: center; flex-wrap: wrap; }
+.utente { color: #bad7f5; }
+.link-nav { background: none; border: 0; padding: 0; font: inherit; color: #e1e8f0; cursor: pointer; }
+.link-nav:hover { color: white; }
